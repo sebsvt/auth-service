@@ -29,8 +29,8 @@ func main() {
 	api := app.Group("/api")
 
 	api.Get("/auth/verify", user_handler.Verify)
-	api.Post("/auth/signup", user_handler.SignUp)
-	api.Post("/auth/signin", user_handler.SignIn)
+	api.Post("/auth/sign-up", user_handler.SignUp)
+	api.Post("/auth/sign-in", user_handler.SignIn)
 	api.Post("/auth/refresh", user_handler.RefreshToken)
 
 	app.Listen(":8080")
