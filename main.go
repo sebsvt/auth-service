@@ -10,6 +10,7 @@ import (
 	"github.com/joho/godotenv"
 	_ "github.com/lib/pq"
 	"github.com/sebsvt/cmu-contest-2024/auth-service/handlers"
+	"github.com/sebsvt/cmu-contest-2024/auth-service/middlewares"
 	"github.com/sebsvt/cmu-contest-2024/auth-service/repository"
 	"github.com/sebsvt/cmu-contest-2024/auth-service/services"
 )
@@ -23,6 +24,7 @@ func main() {
 	user_handler := handlers.NewAuthHandler(user_srv, auth_srv)
 
 	app := fiber.New()
+	app.Use("/api/auth/verify", middlewares.AuthRequired(auth_srv))
 
 	api := app.Group("/api")
 
