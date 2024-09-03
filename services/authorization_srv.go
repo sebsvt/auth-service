@@ -65,12 +65,14 @@ func (srv auth) Tokenize(subject string) (string, string, error) {
 	access_token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
 		"sub":  subject,
 		"exp":  time.Now().Add(srv.accessTokenDuration).Unix(),
+		"iss":  "aiselena-auth",
 		"type": AccessToken,
 	})
 
 	refresh_token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
 		"sub":  subject,
 		"exp":  time.Now().Add(srv.refreshTokenDuration).Unix(),
+		"iss":  "aiselena-auth",
 		"type": RefreshToken,
 	})
 
