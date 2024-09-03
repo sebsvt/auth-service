@@ -116,3 +116,15 @@ func (h authHandler) RefreshToken(c *fiber.Ctx) error {
 		"type":          "Bearer",
 	})
 }
+
+func (h authHandler) Verify(c *fiber.Ctx) error {
+	user_id, ok := c.Locals("user_id").(string)
+	if !ok || user_id == "" {
+		return c.Status(http.StatusUnauthorized).JSON(fiber.Map{
+			"error": services.ErrAuthorizationFailed.Error(),
+		})
+	}
+	return c.JSON(fiber.Map{
+		"user_id": user_id,
+	})
+}
