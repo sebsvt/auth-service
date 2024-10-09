@@ -1,7 +1,9 @@
-FROM golang:1.23.0
+FROM golang:1.23.0-alpine as builder
 
-WORKDIR /usr/src/app
-
+WORKDIR /go/src
 COPY . .
+RUN go get && go build -o /go/bin/app
 
-RUN go mod tidy
+FROM alpine
+COPY --from=builder /go/bin/app/ /app
+ENTRYPOINT [ "/app" ]

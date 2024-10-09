@@ -35,6 +35,12 @@ func AuthRequired(authSrv services.Authorization) fiber.Handler {
 				"error": "invalid or expired token",
 			})
 		}
+
+		if info.Type != services.AccessToken {
+			return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{
+				"error": "invalid token",
+			})
+		}
 		// Set the user ID in the context for use in handlers
 		c.Locals("user_id", info.Subject)
 		return c.Next()
